@@ -199,7 +199,8 @@ threattree-lab/
 ├── .gitignore
 ├── docs/                       # Learning, model, data, and evaluation guides
 ├── lessons/
-│   └── 04_inference_smoke.py    # Verified small-model inference
+│   ├── 04_inference_smoke.py    # Verified small-model inference
+│   └── 05_validate_dataset.py   # Curated dataset validation
 ├── configs/
 │   ├── inference-fast.yaml
 │   ├── inference-thinking.yaml
@@ -267,20 +268,23 @@ as risk-assessment guidance, not as automatic labels for a training set.
 
 Before training:
 
-1. Record source URLs, snapshot versions/commits, dates, checksums, and terms.
+1. Run `.venv/bin/python lessons/05_validate_dataset.py` on the curated JSONL
+   file; it checks record shape, tree graph rules, risk values, and sensitive
+   paths. Use `--strict` to fail on unreviewed synthetic records.
+2. Record source URLs, snapshot versions/commits, dates, checksums, and terms.
    Retain attribution and exclude revoked/deprecated records by default.
-2. Write task-shaped examples: system description plus desired JSON tree,
+3. Write task-shaped examples: system description plus desired JSON tree,
    assumptions, evidence references, mitigations, and uncertainty.
    Raw MITRE descriptions alone do not teach scenario decomposition.
-3. Review 50 pilot examples manually before expanding toward 500–1,000 examples.
+4. Review 50 pilot examples manually before expanding toward 500–1,000 examples.
    AI-drafted examples need review and must be labeled honestly.
-4. Deduplicate and group related scenarios before an 80/20 train/validation
+5. Deduplicate and group related scenarios before an 80/20 train/validation
    split. Keep final test scenarios separate; do not leak paraphrases between
    splits or use final-test failures to select hyperparameters.
-5. Score JSON validity, graph correctness, AND/OR logic, prerequisite fit,
+6. Score JSON validity, graph correctness, AND/OR logic, prerequisite fit,
    source support, mitigation relevance, and uncertainty. Valid IDs alone do not
    prove a citation supports a claim.
-6. Measure warm and cold latency separately, along with generated tokens,
+7. Measure warm and cold latency separately, along with generated tokens,
    truncation, memory pressure, and swap. A lower training loss alone is not proof
    of a better threat model.
 
