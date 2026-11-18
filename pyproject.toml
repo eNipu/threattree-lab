@@ -1,0 +1,36 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "threattree-lab"
+version = "0.1.0"
+description = "A local learning lab for evidence-grounded attack trees and small-model fine-tuning."
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "numpy>=2.0",
+  "pydantic>=2.10",
+  "pyyaml>=6.0",
+  "typer>=0.15",
+]
+
+[project.optional-dependencies]
+mlx = ["mlx-lm[train]>=0.31.3; sys_platform == 'darwin' and platform_machine == 'arm64'"]
+learning = ["matplotlib>=3.9", "jupyterlab>=4.3"]
+
+[dependency-groups]
+dev = ["pytest>=8.3", "ruff>=0.11"]
+
+[project.scripts]
+threattree = "threattree_lab.cli:app"
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
